@@ -8,6 +8,8 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 /**
  * Created by Ashot Simonyan on 27.10.23.
  */
@@ -23,6 +25,12 @@ public class TodoMutation implements GraphQLMutationResolver {
         Todo todoObj = new Todo();
         todoObj.setTodo(todo);
         return todoRepository.save(todoObj);
+    }
+
+    @MutationMapping("delete")
+    public List<Todo> deleteTodo (@Argument String id) {
+        todoRepository.deleteById(id);
+        return todoRepository.findAll();
     }
 
 }
